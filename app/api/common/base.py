@@ -24,7 +24,7 @@ class BaseResource(object):
         return json.dumps(data)
 
     def from_db_to_json(self, db):
-        return json.loads(db, cls=new_alchemy_encoder)
+        return json.dumps(db, cls=new_alchemy_encoder())
 
     def on_error(self, response, error=None):
         response.status = error["status"]
@@ -43,6 +43,7 @@ class BaseResource(object):
         meta["code"] = 200
         obj = OrderedDict()
         obj["meta"] = meta
+        obj["data"] = data
         response.body = self.to_json(data)
 
     def on_get(self,request,response):

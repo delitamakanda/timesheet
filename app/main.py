@@ -20,6 +20,7 @@ class App(falcon.API):
         self.add_route('/v1/users', users.Collection())
         self.add_route('/v1/users/{user_id}', users.Item())
         self.add_route('/v1/users/self/login', users.Self())
+        self.add_route('/v1/users/self/resetpassword', users.Self())
 
         self.add_error_handler(AppError, AppError.handle)
 

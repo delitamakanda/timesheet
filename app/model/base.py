@@ -17,10 +17,10 @@ class BaseModel(object):
         return cls.__name__.lower()
 
     @classmethod
-    def __table_cls__(cls, *args, **kwargs):
-        for obj in args[1:]:
+    def __table_cls__(cls, *arg, **kw):
+        for obj in arg[1:]:
             if (isinstance(obj, Column) and obj.primary_key) or isinstance(obj, PrimaryKeyConstraint):
-                return Table(*args, **kwargs)
+                return Table(*arg, **kw)
         return None
 
     @classmethod

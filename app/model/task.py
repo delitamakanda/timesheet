@@ -11,7 +11,7 @@ class Task(Base):
     title = Column(String(100), nullable=False)
     description = Column(String(1000), nullable=True)
     entry_id = Column(Integer, ForeignKey("timeentry.id"), nullable=False)
-    entry = relationship("TimeEntry", back_populates="timeentry")
+    entry = relationship("TimeEntry", backref="timeentry")
 
 
     def __repr__(self):

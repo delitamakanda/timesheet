@@ -13,7 +13,7 @@ def get_common_key():
     return app_secret_key
 
 def uuid():
-    return shortuuid.ShortUUID(alphabet=UUID_ALPHABET, length=UUID_LENGTH)
+    return shortuuid.ShortUUID(alphabet=UUID_ALPHABET).random(UUID_LENGTH)
 
 
 def encrypt_password(password):
@@ -23,7 +23,7 @@ def encrypt_password(password):
 def decrypt_password(encrypted_password):
     try:
         decryptor = get_common_key()
-        return decryptor.decrypt(encrypted_password).decode('utf-8')
+        return decryptor.decrypt(encrypted_password.encode('utf-8'))
     except InvalidToken:
         return None
 

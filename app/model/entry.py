@@ -12,7 +12,7 @@ from sqlalchemy.orm import relationship
 class TimeEntry(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.user_id'), nullable=False)
-    user = relationship("User", back_populates="timeentry")
+    user = relationship("User", backref="user")
     start_time = Column(DateTime, nullable=True)
     end_time = Column(DateTime, nullable=True)
 

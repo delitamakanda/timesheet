@@ -15,9 +15,19 @@ LOG = log.get_logger()
 
 
 FIELDS = {
-    "username": {"type": "string", "required": True, "min_length": 3, "max_length": 20},
-    "email": {"type": "string", "required": True, "min_length": 3, "max_length": 255, "regex": "[a-zA-Z0-9._-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}"},
-    "password": {"type": "string", "required": True, "min_length": 6, "max_length": 64, "regex": "[0-9a-zA-Z]\w{3,14}"},
+    "username": {"type": "string", "required": True, "minlength": 3, "maxlength": 20},
+    "email": {
+        "type": "string", 
+        "required": True, 
+        "maxlength": 255, 
+        "regex": "[a-zA-Z0-9._-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}"
+    },
+    "password": {
+        "type": "string", 
+        "required": True, 
+        "maxlength": 64, 
+        "regex": "[0-9a-zA-Z]\w{3,14}"
+    },
     "info": {"type": "string", "required": False }
 }
 
@@ -81,29 +91,31 @@ class Item(BaseResource):
             raise NotFoundError("user {} not found".format(user_id))
 
 class Self(BaseResource):
-    LOGIN = 'login'
-    RESET_PASSWORD = 'resetpassword'
+    LOGIN = "login"
+    RESET_PASSWORD = "resetpassword"
 
     def on_get(self, request, response):
         cmd = re.split("\\W+", request.path)[-1:][0]
-        if cmd == self.LOGIN:
+        if cmd == Self.LOGIN:
             self.process_login(request, response)
-        elif cmd == self.RESET_PASSWORD:
+        elif cmd == Self.RESET_PASSWORD:
             self.process_reset_password(request, response)
 
     def process_login(self, request, response):
         data = request.context["data"]
-        email = data["email"]
-        password = data["password"]
-        session = request.context["session"]
-        try:
-            user = User.find_by_email(session, email)
-            if verify_password(password, user.password.encode('utf-8')):
-                self.on_success(response, user.to_dict())
-            else:
-                raise PasswordNotMatchError()
-        except NoResultFound:
-            raise NotFoundError("user {} not found".format(email))
+        if data is not None:
+            print(data)
+            email = data["email"]
+            password = data["password"]
+            session = request.context["session"]
+            try:
+                user = User.find_by_email(session, email)
+                if verify_password(password, user.password.encode('utf-8')):
+                    self.on_success(response, user.to_dict())
+                else:
+                    raise PasswordNotMatchError()
+            except NoResultFound:
+                raise NotFoundError("user {} not found".format(email))
 
     @falcon.before(auth_required)
     def process_reset_password(self, request, response):

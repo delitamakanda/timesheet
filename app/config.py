@@ -6,7 +6,7 @@ API_NAME = 'Timesheet Rest API'
 
 SECRET_KEY = 'xs4G5ZD9SwNME6nWRWrK_aq6Yb9H8VJpdwCzkTErFPw='
 
-UUID_LENGTH = 36
+UUID_LENGTH = 10
 
 UUID_ALPHABET = ''.join(map(chr, list(range(48, 58))))
 

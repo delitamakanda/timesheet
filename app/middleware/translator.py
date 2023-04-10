@@ -12,7 +12,7 @@ class JSONTranslator(object):
                 message = 'Could not read request body'
                 raise falcon('Bad Request', message)
             try:
-                request_body = json.loads(request_body.decode('utf-8'))
+                request.context['data'] = json.loads(request_body.decode('utf-8'))
             except ValueError:
                 raise InvalidRequest('No JSON object could be decoded or malformed')
             except UnicodeDecodeError:

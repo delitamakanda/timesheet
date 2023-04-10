@@ -47,7 +47,6 @@ class AppError(Exception):
     def handle(exception, request, response, error=None):
         response.status = exception.status
         meta = OrderedDict()
-        meta["status"] = exception.status
         meta["code"] = exception.code
         meta["message"] = exception.message
         if exception.description:
