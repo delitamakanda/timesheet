@@ -16,3 +16,7 @@ class TimeEntry(models.Model):
 ```bash
   gunicorn -b 127.0.0.1:5000 --reload app.main:application
   ```
+
+## To Do
+1. generate openapi documentation
+2. enpoints for tasks and time entries
