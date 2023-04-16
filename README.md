@@ -18,5 +18,5 @@ class TimeEntry(models.Model):
   ```
 
 ## To Do
-1. generate openapi documentation
-2. enpoints for tasks and time entries
+1. ~generate openapi documentation~
+2. ~enpoints for tasks and time entries~
